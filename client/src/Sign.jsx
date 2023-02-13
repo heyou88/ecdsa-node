@@ -58,7 +58,7 @@ return (
       </label>
 
     <div className="balance">signature: {signature}</div>
-    <input type="submit" className="button" value="Generate" />
+    <input type="submit" className="button" value="Generate Signature" />
   </div>
   </form>
 );

@@ -1,6 +1,6 @@
 import Wallet from "./Wallet";
 import Transfer from "./Transfer";
-import Sign from './Generator';
+import Sign from './Sign';
 import "./App.scss";
 import { useState } from "react";
 
