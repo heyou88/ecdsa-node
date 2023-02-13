@@ -3,21 +3,24 @@ import { keccak256 } from "ethereum-cryptography/keccak";
 import server from "./server";
 import * as secp from 'ethereum-cryptography/secp256k1'
 import {toHex, utf8ToBytes} from 'ethereum-cryptography/utils'
-  function hashMessage (message){
-    return keccak256(utf8ToBytes(message))
-  }
 export default function Sign ({address,  recipient,setRecipient,sendAmount, setSendAmount}){
+
   const setValue = (setter) => (evt) => setter(evt.target.value)
   const [privateKey, setPrivateKey] = useState("");
   const [signature, setSignature] = useState("")
   const [nounce, setNounce] = useState ("")
+
+  // function hashMessage (message){
+  //   return keccak256(utf8ToBytes(message))
+  // }
+
   function message(){
-const message = {
+  const message = {
   privateKey,
   recipient,
   sendAmount
 }
-return hashMessage(message)
+return keccak256(utf8ToBytes(message))
 }
 
 async function getSig(){
