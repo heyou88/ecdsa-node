@@ -15,17 +15,17 @@ export default function Sign ({address,  recipient,setRecipient,sendAmount, setS
   // }
 
   function message(){
-  const message = {
-  privateKey,
+  const message = JSON.stringify({
   recipient,
   sendAmount
-}
+})
 return keccak256(utf8ToBytes(message))
 }
 
-async function getSig(){
+async function getSig(evt){
+   evt.preventDefault();
   if(privateKey && recipient && sendAmount){
-    const sig =await secp.sign(message(), privateKey,{recovered: true})
+    const sig = await secp.sign(message(), privateKey,{recovered: true})
     setSignature(sig)
     console.log(sig)
   }

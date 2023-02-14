@@ -21,6 +21,8 @@ function App() {
         setAddress={setAddress}
         privateKey = {privateKey}
         setPrivateKey = {setPrivateKey}
+        // publicKey = {publicKey}
+        // setPublicKey = {setPublicKey}
       />
       <Transfer setBalance={setBalance}
                 address={address}

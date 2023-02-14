@@ -1,10 +1,16 @@
 import server from "./server";
 import * as secp from 'ethereum-cryptography/secp256k1'
 import {toHex} from 'ethereum-cryptography/utils'
+import { useState } from "react";
+
 function Wallet({ address, setAddress, balance, setBalance, privateKey, setPrivateKey}) {
+  const [publicKey, setPublicKey] = useState("");
+
   async function onChange(evt) {
-    const privateKey = evt.target.value;
-    const address  = toHex(secp.getPublicKey(privateKey))
+    const publicKey = evt.target.value;
+    //const address  = toHex(secp.getPublicKey(privateKey))
+    const address = publicKey
+    setPublicKey(publicKey)
     setPrivateKey(privateKey);
     setAddress(address);
     if (address) {
@@ -22,8 +28,8 @@ function Wallet({ address, setAddress, balance, setBalance, privateKey, setPriva
       <h1>Your Wallet</h1>
 
       <label>
-        private key
-        <input placeholder="Type an address, for example: 0x1" value={privateKey} onChange={onChange}></input>
+        public key
+        <input placeholder="Type an address, for example: 0x1" value={publicKey} onChange={onChange}></input>
         Address: {address.slice(0,10)}...
       </label>
 

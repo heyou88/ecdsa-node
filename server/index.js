@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = 3042;
-
+const secp = require("ethereum-cryptography/secp256k1");
+const {toHex, utf8ToBytes} = require('ethereum-cryptography/utils')
 app.use(cors());
 app.use(express.json());
 
@@ -22,19 +23,45 @@ app.post("/send", (req, res) => {
   //TODO:  get a signature from client side application
 
   // recover the public address from the signature
-  const { sender, recipient, amount } = req.body;
+  const { sender, recipient, amount, signature } = req.body;
+  const message = JSON.stringify({
+    recipient,
+    amount
+  })
+
+
+  const recoveryBit = signature[1]
+  const sig = toHex(signature[0])
+  const publicKey =  toHex(secp.recoverPublicKey(message,sig,recoveryBit))
+
 
   setInitialBalance(sender);
   setInitialBalance(recipient);
 
-  if (balances[sender] < amount) {
-    res.status(400).send({ message: "Not enough funds!" });
-  } else {
+  if (balances[sender] >= amount && sender === publicKey) {
     balances[sender] -= amount;
     balances[recipient] += amount;
     res.send({ balance: balances[sender] });
+    console.log(signature)
+  } else if(sender !== publicKey){
+    res.status(400).send({ message: "Signature not valid!" });
+  }
+  else if(balances[sender] < amount) {
+    res.status(400).send({ message: "Not enough funds!" });
   }
 });
+
+//   if (balances[sender] < amount) {
+//     res.status(400).send({ message: "Not enough funds!" });
+//   } else if(balances[sender] !== publicKey){
+//     res.status(400).send({ message: "Signature not valid!" });
+//   }
+//   else {
+//     balances[sender] -= amount;
+//     balances[recipient] += amount;
+//     res.send({ balance: balances[sender] });
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}!`);
