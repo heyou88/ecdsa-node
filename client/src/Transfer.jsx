@@ -1,10 +1,10 @@
 import { useState } from "react";
 import server from "./server";
 
-function Transfer({ address, setBalance, signature,setSignature }) {
+function Transfer({ address, setBalance }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
-
+  const [signature, setSignature] = useState("");
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
   async function transfer(evt) {
