@@ -34,6 +34,9 @@ function Wallet({ address, setAddress, balance, setBalance, privateKey, setPriva
       </label>
 
       <div className="balance">Balance: {balance}</div>
+      <div>
+        <h4>public key:04561e0615f99073719c535022f34d1e52069322a8bd4d7bdff94ea585fa432fe4b1084a52e32f3a979a366cb2abdb6a848b4dba34b1c09b90fd85449b1f1fc5d4</h4>
+      </div>
     </div>
   );
 }

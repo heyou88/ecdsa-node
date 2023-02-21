@@ -7,16 +7,14 @@ const message = JSON.stringify({
 })
 const privateKey = "703bd0c6fce541daea5575c0eb046e19a3085a9a3188f770de16a6f1ec6e0344" //public key: 04561e0615f99073719c535022f34d1e52069322a8bd4d7bdff94ea585fa432fe4b1084a52e32f3a979a366cb2abdb6a848b4dba34b1c09b90fd85449b1f1fc5d4
 const hashedMsg = keccak256(utf8ToBytes(message));
-// console.log(hashedMsg);
-// console.log(toHex(hashedMsg));
+
 async function recover(){
-  return signature= await secp.sign(hashedMsg , privateKey,{recovered: true})
+  const signature= await secp.sign(hashedMsg , privateKey,{recovered: true})
+  //const recoveryBit = toHex(signature[1])
+  const publicKey =  secp.recoverPublicKey(hashedMsg,signature[0],0)
+  console.log(toHex(publicKey))
+  console.log(signature[0].toString())
+  const string = "1,2"
+  console.log(Uint8Array.from(string.split(",")))
 }
-
-// const sig = toHex(signature[0])
-//    const recoveryBit = signature[1]
-//    const publicKey =  secp.recoverPublicKey(hashedMsg,sig,recoveryBit)
-//    console.log(toHex(publicKey))
-
-
-console.log(recover())
+ recover()

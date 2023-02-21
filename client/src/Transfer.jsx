@@ -1,10 +1,11 @@
 import { useState } from "react";
 import server from "./server";
 
-function Transfer({ address, setBalance }) {
+function Transfer({ address, setBalance}) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
   const [signature, setSignature] = useState("");
+  const [recoverBit, setRecoverBit]= useState("")
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
   async function transfer(evt) {
@@ -17,7 +18,8 @@ function Transfer({ address, setBalance }) {
         sender: address,
         amount: parseInt(sendAmount),
         recipient,
-        signature
+        signature,
+        recoverBit
       });
       setBalance(balance);
     } catch (ex) {
@@ -53,6 +55,15 @@ function Transfer({ address, setBalance }) {
           placeholder="Insert the TX signature"
           value={signature}
           onChange={setValue(setSignature)}
+        ></input>
+      </label>
+
+      <label>
+        recoverBit
+        <input
+          placeholder="Insert the recover bit"
+          value={recoverBit}
+          onChange={setValue(setRecoverBit)}
         ></input>
       </label>
 
