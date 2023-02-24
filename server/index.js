@@ -33,10 +33,9 @@ app.post("/send", (req, res) => {
 
   setInitialBalance(sender);
   setInitialBalance(recipient);
-  if(isValid(sender, signature, recoverBit,message)){
+  if(isValid(req.body)){
     console.log(signature)
     res.send({ message: "is valid!" })
-  }
     if (balances[sender] < amount ) {
       res.status(400).send({ message: "Not enough funds!" });
     } else {
@@ -44,6 +43,9 @@ app.post("/send", (req, res) => {
       balances[recipient] += amount;
       res.send({ balance: balances[sender], message: "Tx was successful!" });
     }
+  }else{
+    res.send({ message: "is invalid!" })
+  }
 
 });
 
